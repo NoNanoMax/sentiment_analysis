@@ -51,9 +51,8 @@ class RNN(nn.Module):
     
     packed_embedded = nn.utils.rnn.pack_padded_sequence(embedded, [text_lengths])
     
-    # cell arg for LSTM, remove for GRU
     packed_output, (hidden, cell) = self.rnn(packed_embedded)
-    #unpack sequence
+   
     output, output_lengths = nn.utils.rnn.pad_packed_sequence(packed_output)  
     
     hidden = self.dropout(torch.cat((hidden[-2, :, :], hidden[-1, :, :]), dim=1))
